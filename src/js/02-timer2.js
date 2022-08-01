@@ -3,7 +3,6 @@ import "flatpickr/dist/flatpickr.min.css";
 
 const input = document.querySelector('#datetime-picker')
 const btnStart = document.querySelector('button[data-start]')
-const btnStop = document.querySelector('button[data-stop]')
 let deadline = new Date();
 input.addEventListener('click', flatpickr)
 btnStart.addEventListener('click', interval)
@@ -29,40 +28,49 @@ const options = {
   };
 flatpickr('#datetime-picker', options)
 
-const secondsTimer = document.querySelector('.value[data-seconds]');
+ const secondsTimer = document.querySelector('.value[data-seconds]');
 const minutesTimer = document.querySelector('.value[data-minutes]');
 const hoursTimer = document.querySelector('.value[data-hours]');
 const daysTimer = document.querySelector('.value[data-days]');
-
-var intervalID;
+const nowDay = new Date();
+const delta = (deadline - nowDay)
+// const ms = new Date();
 function interval () {
-  intervalID = setInterval(convertMs, 1000)
-    btnStart.setAttribute('disabled', true)
+    setInterval(convertMs, 1000)
+  
+    console.log(delta)
 }
 
-function convertMs (ms) {
-    ms = deadline - new Date();
-    const second = 1000;
-    const minute = second * 60;
-    const hour = minute * 60;
-    const day = hour * 24;
+function convertMs(ms) {
+  const tooday = new Date();
+  nowDay.textContent = tooday
+  const second = 1000;
+  const minute = second * 60;
+  const hour = minute * 60;
+  const day = hour * 24;
 
-    const days = (Math.floor(ms / day)).toString().padStart(2, 0);
-    const hours = (Math.floor((ms % day) / hour)).toString().padStart(2, 0);
-    const minutes = (Math.floor(((ms % day) % hour) / minute)).toString().padStart(2, 0);
-    const seconds = (Math.floor((((ms % day) % hour) % minute) / second)).toString().padStart(2, 0);
+  const days = Math.floor(ms / day);
+   const hours = Math.floor((ms % day) / hour);
+   const minutes = Math.floor(((ms % day) % hour) / minute);
+   const seconds = Math.floor((((ms % day) % hour) % minute) / second);
 
     secondsTimer.textContent = seconds;
     minutesTimer.textContent = minutes;
     hoursTimer.textContent = hours;
     daysTimer.textContent = days;
-    intervalStop ()
+    // console.log('sec', seconds)
+    // console.log('min', minutes)
+    // console.log('hours', hours)
+    // console.log('days', days)
+    // console.log(convertMs(deadline - nowDay))
+    // console.log(deadline - tooday)
+  return { days, hours, minutes, seconds };
+ 
 }
 
-function intervalStop () {
-  if (secondsTimer.textContent === "00")
-   {
-    clearInterval(intervalID)
-  }
-}
+// console.log(delta)
+
+
+
+
 
