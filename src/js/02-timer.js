@@ -60,7 +60,7 @@ function convertMs (ms) {
 }
 
 function intervalStop () {
-  if (secondsTimer.textContent === "00")
+  if (secondsTimer.textContent === "00" && minutesTimer.textContent === "00" && hoursTimer.textContent === "00" && daysTimer.textContent === "00")
    {
     clearInterval(intervalID)
   }
